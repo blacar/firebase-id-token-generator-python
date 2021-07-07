@@ -1,6 +1,6 @@
 import argparse
 import json
-import urllib2
+import urllib
 
 import firebase_admin
 from firebase_admin import credentials, auth
@@ -40,10 +40,10 @@ def get_token(uid):
   url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty" \
         "/verifyCustomToken?key={}".format(API_KEY)
 
-  req = urllib2.Request(url,
+  req = urllib.Request(url,
                         json.dumps(data),
                         {'Content-Type': 'application/json'})
-  response = urllib2.urlopen(req).read()
+  response = urllib.urlopen(req).read()
 
   return json.loads(response)
 
@@ -54,4 +54,4 @@ if __name__ == "__main__":
   parser.add_argument("uid", help="Firebase User ID (UID)", type=str)
   args = parser.parse_args()
 
-  print get_token(args.uid)["idToken"]
+  print(get_token(args.uid)["idToken"])
