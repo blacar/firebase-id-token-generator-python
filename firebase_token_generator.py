@@ -33,7 +33,7 @@ def get_token(uid):
   """
   token = auth.create_custom_token(uid)
   data = {
-    'token': token,
+    'token': token.decode(),
     'returnSecureToken': True
   }
 
@@ -41,7 +41,7 @@ def get_token(uid):
         "/verifyCustomToken?key={}".format(API_KEY)
 
   req = urllib.Request(url,
-                        json.dumps(data),
+                        json.dumps(data).encode(),
                         {'Content-Type': 'application/json'})
   response = urllib.urlopen(req).read()
 
@@ -54,4 +54,4 @@ if __name__ == "__main__":
   parser.add_argument("uid", help="Firebase User ID (UID)", type=str)
   args = parser.parse_args()
 
-  print(get_token(args.uid)["idToken"])
+  print(str(get_token(args.uid)["idToken"]))
